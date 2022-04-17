@@ -22,7 +22,7 @@ const userProxy = new Proxy( user, {
         // вот так
         // return ['name'].includes(prop)
     },
-    defineProperty(target, prop) {
+    deleteProperty(target, prop) {
       delete target[prop];
       return true
     }
