@@ -20,7 +20,20 @@ let person = {
     age: 33,
     profession : "Frontend developer",
     citizen : "Moscow",
-    friends : ['Kolya','Anya','Misha']
+    friends : ['Kolya','Anya','Misha'],
+
+    getNameAge(){
+        return `${this.name} ${this.age}`;
+    },
+    getProfCity(){
+        return `${this.profession} ${this.citizen}`
+    },
+    makeDiff(){
+        console.log('doSomething');
+    },
+    writeChannel(){
+        console.log('any stream');
+    }
 }
 
 let personProxy = new Proxy(person, {
@@ -35,10 +48,26 @@ let personProxy = new Proxy(person, {
                 target.friends.push(friend);
             }
         }
-    }
+    },
+    /**
+     * ВАШ КОД ТУТ
+     *  ...
+     * get (...){...}
+     *  ...
+     */
 })
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
 
 console.log(personProxy.friends);
+
+/**
+ *  ЗАДАНИЕ №2
+ * 1. Выяснить какие базовые методы вызываются у объекта когда к нему применяют цикл for (let prop of personProxy)
+ * 2. Проксировать эти методы таким образом, чтобы при прохождении идентификаторов свойств объекта
+ *  циклом for...of в prop попадали только методы, которые начинаются с get
+ *  3. в цикле for...of пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
+ *  4. убедиться что были вызванны только методы get...
+ */
+
