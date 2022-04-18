@@ -19,13 +19,17 @@ $( "p" ).on( "click", function() { // та же логика обработчи�
   console.log( "click" );
 });
 
+$( "p.color" ).click(function () { // установка обработчика на click
+  $(this).toggleClass('color')
+  console.log( "You paint a paragraph!" );
+});
+
+
 $( "#menu li" ).hover(function() { 
   $( this ).toggleClass( "hover" );
 });
 
-$( "a" ).simulate( "click" ); // можем искуственно симулировать клик
-
-$( "p" ).hide();// спрятать элемент
+$( "p.hide" ).hide();// спрятать элемент
  
 // показать все спрятанные div-ы
 $( "div.hidden" ).show();
@@ -36,7 +40,7 @@ $( "div.hidden" ).show();
 
 // стандартный способ 
 const someDiv = document.querySelector('.someClass')
-someDiv.classList.add('newClass')
+someDiv?.classList.add('newClass')
 // document.querySelector('.someClass').classList.add('newClass')
 
 //jQuery
