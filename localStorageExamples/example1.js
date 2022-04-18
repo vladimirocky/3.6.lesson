@@ -19,7 +19,7 @@ console.log(localStorage.getItem('someVarible'))
 // на самом деле запишется строка
 localStorage.setItem('someVarible', JSON.stringify(someVarible));
 // Мы не можем применить к объекту метод toString() не потеряв данные
-// так мы положем только [object Object]
+// так мы положим только [object Object]
 
 // метод глобального объекта
 console.log(localStorage.getItem('someVarible'))

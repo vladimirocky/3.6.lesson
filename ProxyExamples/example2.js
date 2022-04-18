@@ -40,3 +40,5 @@ const userProxy = new Proxy( user, {
 //
 //console.log(user.name); тоже изменилось на Петя
 //console.log(userProxy.name);
+
+
