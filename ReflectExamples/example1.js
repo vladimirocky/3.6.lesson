@@ -1,3 +1,15 @@
+let user = { name: 'Николай', age: 29 };
+
+let proxyUser = new Proxy(user, {
+  get(target, prop, receiver) {
+    if (prop == 'name') {
+      console.log('Кто-то читает имя!')
+    }
+    // return target[prop] - без Reflect
+    Reflect.get(target, prop, receiver)
+  }
+});
+
 // Reflect - это объект, который предоставляет методы, для работы с объектом
 
 testFunction.apply(this, argsArr) // вызов какой-то функции с заданым контекстом
@@ -24,3 +36,5 @@ Reflect.has(duck, 'haircut');
 Reflect.set(duck, 'eyes', 'black');
 // вернет "true" если свойство успешно запишется
 // duck= {..., eyes: 'black'}
+
+Reflect.deleteProperty(foo, 'bar')
