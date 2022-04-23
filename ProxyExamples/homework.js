@@ -15,6 +15,10 @@
  * 3. Если введем console.log(personProxy.age_citizen_name_age) то получим "33 Moscow Vasya 33"
  */
 
+
+
+
+
 let person = {
     name: "Vasya",
     age: 33,
@@ -49,6 +53,24 @@ let personProxy = new Proxy(person, {
             }
         }
     },
+  get(target,prop){
+      //  console.log(`мы считываем значение ${prop} i ono ravno ${target[prop]}`);
+    if(!(prop in target)){
+       return prop
+      .split('_')
+      .map(e =>target[e])
+      .join(' ')
+      
+         
+
+    }
+  return target[prop]
+    }
+    
+    
+
+
+
     /**
      * ВАШ КОД ТУТ
      *  ...
@@ -59,7 +81,7 @@ let personProxy = new Proxy(person, {
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
-
+console.log(personProxy.age_citizen_name_age)
 console.log(personProxy.friends);
 
 /**
@@ -70,4 +92,22 @@ console.log(personProxy.friends);
  *  3. в цикле for...of пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
  *  4. убедиться что были вызванны только методы get...
  */
+ //for(let prop in personProxy){
+///console.log(prop);
+//} // получаем ключи обьекта и методы 
 
+
+const hidden = (target,prefix = 'get')=>{
+    return new Proxy(target,{
+        has:(obj,prop) => prop in obj && prop.startsWith(prefix),
+        ownKeys: obj =>Reflect.ownKeys(obj).filter (p=> p.startsWith(prefix)),
+        get:(obj,prop,receiver) => (prop in receiver ? obj[prop] : Object.defineProperties(obj,'prop',{
+            enumerable:false,
+        }))
+    })
+}
+
+const objTest = hidden(person)
+for(let keys in objTest){
+    console.log(keys);
+}
