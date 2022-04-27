@@ -32,13 +32,20 @@ $( "p.color" ).click(function () { // установка обработчика 
   $(this).toggleClass('color')
   console.log( "You paint a paragraph!" );
 });
+$( "li" ).hover(function() {
+  $( this ).fadeOut( 100 );
+  $( this ).fadeIn( 500 );
+});
 
 
 $( "#menu li" ).hover(function() { 
   $( this ).toggleClass( "hover" );
 });
 
-$( "p.hide" ).hide();// спрятать элемент
+// $( "p.hide" ).hide();// спрятать элемент
+$( "button" ).click(function() {
+  $( "p.hide" ).hide( "slow" );
+});
  
 // показать все спрятанные div-ы
 $( "div.hidden" ).show();
