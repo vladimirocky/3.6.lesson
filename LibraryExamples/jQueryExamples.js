@@ -33,7 +33,14 @@ $( "p.color" ).click(function () { // установка обработчика 
   console.log( "You paint a paragraph!" );
 });
 
-
+/**
+ * -------------------------------------
+ * но у нас нет id menu
+ *  класса hover
+ *
+ *  не увидел тут демонсрацию работы метода hover
+ *  --------------------------------------
+ */
 $( "#menu li" ).hover(function() { 
   $( this ).toggleClass( "hover" );
 });
