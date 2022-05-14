@@ -29,4 +29,4 @@ const newVari = JSON.parse(localStorage.getItem('someVarible'))
 console.log(newVari);
 
 // метод позволяющий почистить LocalStorage
-localStorage.clear()
+// localStorage.clear()

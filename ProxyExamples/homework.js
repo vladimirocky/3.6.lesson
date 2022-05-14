@@ -49,18 +49,20 @@ let personProxy = new Proxy(person, {
             }
         }
     },
-    /**
-     * ВАШ КОД ТУТ
-     *  ...
-     * get (...){...}
-     *  ...
-     */
+    get (target,prop){
+        let propArr = prop.split('_');
+        let str = '';
+        for (property of propArr) {
+            str += `${target[property]} `;
+        }
+        return str;
+    }
 })
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
-personProxy.friends = "Sasha_Eugene_Dasha";
-
-console.log(personProxy.friends);
+// personProxy.friends = "Sasha_Eugene_Dasha";
+// console.log(personProxy.friends);
+console.log(personProxy.age_citizen_name_age);
 
 /**
  *  ЗАДАНИЕ №2
@@ -70,4 +72,3 @@ console.log(personProxy.friends);
  *  3. в цикле for...in пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
  *  4. убедиться что были вызванны только методы get...
  */
-

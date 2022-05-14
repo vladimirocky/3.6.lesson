@@ -17,7 +17,6 @@ $( "#myDivId" ); // получение элемента по id (#)
 $( ".myDivClass" ); // получение элемента по классу
 
 var myValue = $( "#myDivId" ).val(); // получение значения инпута
- 
 $( "#myDivId" ).val( "hello world" ); // запись значение
 
 $( "p" ).click(function() { // установка обработчика на click
@@ -38,10 +37,16 @@ $( "#menu li" ).hover(function() {
   $( this ).toggleClass( "hover" );
 });
 
-$( "p.hide" ).hide();// спрятать элемент
- 
+$( "p.hide" ).click(function(){
+  $(this).hide();
+})// спрятать элемент
+
 // показать все спрятанные div-ы
-$( "div.hidden" ).show();
+$( "button.showHidden" ).click(function(){
+  $('p.hide').show();
+  $('#menu li').addClass("greenColor")
+})
+
 
 
 

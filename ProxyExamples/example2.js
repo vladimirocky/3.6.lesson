@@ -36,9 +36,9 @@ const userProxy = new Proxy( user, {
  * дабы не путаться
  */
 
-//userProxy.name = "Петя"
-//
-//console.log(user.name); тоже изменилось на Петя
-//console.log(userProxy.name);
+userProxy.name = "Петя"
+
+console.log(user.name);
+console.log(28 in userProxy);
 
 

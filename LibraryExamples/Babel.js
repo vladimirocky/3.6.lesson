@@ -8,7 +8,7 @@
 });
 
 
-function name(e,r, ...args){ // es6
+function nameX(e,r, ...args){ // es6
 	console.log(args,e,r)
 }
 

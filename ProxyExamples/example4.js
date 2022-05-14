@@ -18,3 +18,4 @@ const UserProxy = new Proxy(User,{
 })
 
 let user = new UserProxy('Николай', 28)
+console.log(user);
