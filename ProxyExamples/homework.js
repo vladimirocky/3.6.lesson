@@ -95,6 +95,7 @@ let personProxy = new Proxy(person, {
   for(let keys in testObj){
     console.log(keys);
   }
+  
 //keys:
 //getNameAge 
 //getProfCity 
