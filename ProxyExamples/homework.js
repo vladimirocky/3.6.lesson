@@ -68,9 +68,9 @@ let personProxy = new Proxy(person, {
 });
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
-personProxy.friends = "Sasha_Eugene_Dasha";
+// personProxy.friends = "Sasha_Eugene_Dasha";
 
-console.log(personProxy.friends);
+// console.log(personProxy.friends);
 
 /**
  *  ЗАДАНИЕ №2
@@ -81,20 +81,20 @@ console.log(personProxy.friends);
  *  4. убедиться что были вызванны только методы get...
  */
 
-const hidden = (target, prefix = "get") => {
-  return new Proxy(target, {
-    has: (obj, property) => property in obj && property.startsWith(prefix),
-    ownKeys: (obj) => Reflect.ownKeys(obj).filter((p) => p.startsWith(prefix)),
-    get: (obj, property, receiver) =>
-    property in receiver
-        ? obj[property]
-        : Object.defineProperties(obj, "property", {
-            enumerable: false,
-          }),
-  });
-};
-
-const testobj = hidden(person);
-for (let keys in obj1) {
-  console.log(keys);
-}
+ const hiddenObj = (target,prefix = 'get')=>{
+    return new Proxy(target,{
+        has:(obj,prop) => prop in obj && prop.startsWith(prefix),
+        ownKeys: obj =>Reflect.ownKeys(obj).filter (el=> el.startsWith(prefix)),
+        get:(obj,prop,receiver) => (prop in receiver ? obj[prop] : Object.defineProperties(obj,'prop',{
+            enumerable:false,
+        }))
+    });
+  };
+  
+  const testObj = hiddenObj(person);
+  for(let keys in testObj){
+    console.log(keys);
+  }
+//keys:
+//getNameAge 
+//getProfCity 
