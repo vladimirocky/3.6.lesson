@@ -1,5 +1,5 @@
 /**
-  * Код ниже реализует следующее:
+ * Код ниже реализует следующее:
  * 1. объект оборачивается в прокси
  * 2. базовый метод данного объекта set переопределяется
  * 3. теперь, если set применяется по отношению к свойству friends мы не переписываем заново массив друзей, а просто добавляем х
@@ -16,46 +16,56 @@
  */
 
 let person = {
-    name: "Vasya",
-    age: 33,
-    profession : "Frontend developer",
-    citizen : "Moscow",
-    friends : ['Kolya','Anya','Misha'],
+  name: "Vasya",
+  age: 33,
+  profession: "Frontend developer",
+  citizen: "Moscow",
+  friends: ["Kolya", "Anya", "Misha"],
 
-    getNameAge(){
-        return `${this.name} ${this.age}`;
-    },
-    getProfCity(){
-        return `${this.profession} ${this.citizen}`
-    },
-    makeDiff(){
-        console.log('doSomething');
-    },
-    writeChannel(){
-        console.log('any stream');
-    }
-}
+  getNameAge() {
+    return `${this.name} ${this.age}`;
+  },
+  getProfCity() {
+    return `${this.profession} ${this.citizen}`;
+  },
+  makeDiff() {
+    console.log("doSomething");
+  },
+  writeChannel() {
+    console.log("any stream");
+  },
+};
 
 let personProxy = new Proxy(person, {
-    set (target,prop, value) {
-        if (prop !== 'friends') {
-            // для всех кроми свойства friends действуем по-умолчанию
-            Reflect.set(target, prop, value);
-        } else {
-            // а вот friends теперь будет пополнять массив значениями через '_'
-            let addFriends = value.split('_');
-            for (let friend of addFriends) {
-                target.friends.push(friend);
-            }
-        }
-    },
-    /**
-     * ВАШ КОД ТУТ
-     *  ...
-     * get (...){...}
-     *  ...
-     */
-})
+  set(target, property, value) {
+    if (property !== "friends") {
+      // для всех кроми свойства friends действуем по-умолчанию
+      Reflect.set(target, property, value);
+    } else {
+      // а вот friends теперь будет пополнять массив значениями через '_'
+      let addFriends = value.split("_");
+      for (let friend of addFriends) {
+        target.friends.push(friend);
+      }
+    }
+  },
+
+  /**
+   * ВАШ КОД ТУТ
+   *  ...
+   * get (...){...}
+   *  ...
+   */
+  get(target, property) {
+    if (!(property in target)) {
+      return property
+        .split("_")
+        .map((arr) => target[arr])
+        .join(" ");
+    }
+    return target[property];
+  },
+});
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
@@ -71,3 +81,20 @@ console.log(personProxy.friends);
  *  4. убедиться что были вызванны только методы get...
  */
 
+const hidden = (target, prefix = "get") => {
+  return new Proxy(target, {
+    has: (obj, property) => property in obj && property.startsWith(prefix),
+    ownKeys: (obj) => Reflect.ownKeys(obj).filter((p) => p.startsWith(prefix)),
+    get: (obj, property, receiver) =>
+    property in receiver
+        ? obj[property]
+        : Object.defineProperties(obj, "property", {
+            enumerable: false,
+          }),
+  });
+};
+
+const testobj = hidden(person);
+for (let keys in obj1) {
+  console.log(keys);
+}
