@@ -37,10 +37,10 @@ let person = {
 };
 
 let personProxy = new Proxy(person, {
-  set(target, property, value) {
-    if (property !== "friends") {
+  set(target, prop, value) {
+    if (prop !== "friends") {
       // для всех кроми свойства friends действуем по-умолчанию
-      Reflect.set(target, property, value);
+      Reflect.set(target, prop, value);
     } else {
       // а вот friends теперь будет пополнять массив значениями через '_'
       let addFriends = value.split("_");
@@ -56,14 +56,14 @@ let personProxy = new Proxy(person, {
    * get (...){...}
    *  ...
    */
-  get(target, property) {
-    if (!(property in target)) {
-      return property
+  get(target, prop) {
+    if (!(prop in target)) {
+      return prop
         .split("_")
         .map((arr) => target[arr])
         .join(" ");
     }
-    return target[property];
+    return target[prop];
   },
 });
 
