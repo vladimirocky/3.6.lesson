@@ -20,7 +20,7 @@ var myValue = $( "#myDivId" ).val(); // получение значения ин
  
 $( "#myDivId" ).val( "hello world" ); // запись значение
 
-$( "p" ).click(function() { // установка обработчика на click
+$( "button" ).click(function() { // установка обработчика на click
   console.log( "You clicked a paragraph!" );
 });
 
@@ -33,13 +33,17 @@ $( "p.color" ).click(function () { // установка обработчика 
   console.log( "You paint a paragraph!" );
 });
 
-
-$( "#menu li" ).hover(function() { 
-  $( this ).toggleClass( "hover" );
+$( "li" ).hover(function() { 
+  $( this ).toggleClass( "active" )
+  .next()
+    .stop( true, true )
+    .slideToggle();;
 });
 
-$( "p.hide" ).hide();// спрятать элемент
- 
+$( "button" ).click(function(){
+  $("p.hide").hide();
+});// спрятать элемент
+
 // показать все спрятанные div-ы
 $( "div.hidden" ).show();
 

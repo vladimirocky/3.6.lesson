@@ -49,6 +49,15 @@ let personProxy = new Proxy(person, {
             }
         }
     },
+    get (target, prop){
+        if (prop !== null) {
+            Reflect.set(target, prop);
+            } else {
+            console.log('Отсутствуют значения свойств');
+        };
+
+    }
+    
     /**
      * ВАШ КОД ТУТ
      *  ...
@@ -70,4 +79,20 @@ console.log(personProxy.friends);
  *  3. в цикле for...in пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
  *  4. убедиться что были вызванны только методы get...
  */
+
+
+ for (let prop in personProxy) {
+     get (target,prop) {
+        let pattern = get;
+        let exists = pattern.test(prop);
+        if (exists) {
+            personProxy.prop = target;
+        } else return;
+        for (let prop in personProxy) {
+            console.log(personProxy.prop);
+        }
+     }
+
+ }
+    
 
