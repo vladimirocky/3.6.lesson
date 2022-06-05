@@ -55,7 +55,18 @@ let personProxy = new Proxy(person, {
      * get (...){...}
      *  ...
      */
+     get (target, prop) {
+        if (!(prop in target)) {
+        return prop
+        .split('_')
+        .map(arr => target[arr])
+        .join(' ')
+    }
+    return target[prop]
+    }
 })
+console.log(personProxy.age_citizen_name_age)
+console.log(personProxy.name_profession_citizen)
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
@@ -71,3 +82,18 @@ console.log(personProxy.friends);
  *  4. убедиться что были вызванны только методы get...
  */
 
+
+ const objTest= (target,prefix = 'get')=>{
+    return new Proxy(target,{
+        has:(obj,prop) => prop in obj && prop.startsWith(prefix),
+        ownKeys: obj =>Reflect.ownKeys(obj).filter (p=> p.startsWith(prefix)),
+        get:(obj,prop,receiver) => (prop in receiver ? obj[prop] : Object.defineProperties(obj,'prop',{
+            enumerable:false,
+        }))
+    })
+}
+
+const obj1 = objTest(person)
+for(let keys in obj1){
+    console.log(keys);
+}
