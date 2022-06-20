@@ -41,9 +41,11 @@ $( "p.color" ).click(function () { // установка обработчика 
  *  не увидел тут демонсрацию работы метода hover
  *  --------------------------------------
  */
-$( "#menu li" ).hover(function() { 
-  $( this ).toggleClass( "hover" );
+$( ".hover" ).hover(function() { 
+  $( ".hover" ).css( "background", "green" )
+  .text("Курсор на элементе");
 });
+
 
 $( "p.hide" ).click(function(){
   $(this).hide(1500);
