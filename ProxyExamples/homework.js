@@ -49,22 +49,17 @@ let personProxy = new Proxy(person, {
             }
         }
     },
-    get (target, prop){
-        if (prop !== null) {
-            Reflect.set(target, prop);
-            } else {
-            console.log('Отсутствуют значения свойств');
-        };
-
-    }
-    
+    get: (target, prop) => {
+            return target[prop]
+            } 
+      
     /**
      * ВАШ КОД ТУТ
      *  ...
      * get (...){...}
      *  ...
      */
-})
+} )
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
