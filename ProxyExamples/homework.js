@@ -55,6 +55,9 @@ let personProxy = new Proxy(person, {
      * get (...){...}
      *  ...
      */
+    get() {
+        
+    }
 })
 
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]

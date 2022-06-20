@@ -10,10 +10,15 @@
     .color{
       color: red;
     }
+
+    .hover {
+      color: green;
+      font-size: 25px;
+    }
   </style>
 </head>
 <body>
-
+  <div class = "hidden" style = "display: none;">Спрятанный элемент</div>
   <p>
     some text for click
   </p>
@@ -24,6 +29,14 @@
   <p class="hide">
     hidden text
   </p>
+  <input type="text" id = "myDivId">
+  <input type="text" class = "myDivId">
+
+  <ul id = "menu">
+    <li>Главная</li>
+    <li>Назад</li>
+    <li>Вперёд</li>
+  </ul>
 
   <script src="jQueryExamples.js"></script>
 

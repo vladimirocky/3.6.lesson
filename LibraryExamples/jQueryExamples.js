@@ -38,10 +38,14 @@ $( "#menu li" ).hover(function() {
   $( this ).toggleClass( "hover" );
 });
 
-$( "p.hide" ).hide();// спрятать элемент
+$( "p.hide" ).click(function(){
+  $(this).hide(2500);
+});// спрятать элемент// спрятать элемент
  
 // показать все спрятанные div-ы
-$( "div.hidden" ).show();
+$( "div.hidden" ).click(function(){
+  $(this).show(1500);
+});
 
 
 
