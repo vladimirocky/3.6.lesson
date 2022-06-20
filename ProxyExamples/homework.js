@@ -15,7 +15,7 @@
  * 3. Если введем console.log(personProxy.age_citizen_name_age) то получим "33 Moscow Vasya 33"
  */
 
-let person = {
+ let person = {
     name: "Vasya",
     age: 33,
     profession : "Frontend developer",
@@ -55,11 +55,17 @@ let personProxy = new Proxy(person, {
      * get (...){...}
      *  ...
      */
-    get() {
-        
+    get (target, prop) {
+        if (!(prop in target)) {
+        return prop
+        .split('_')
+        .map(arr => target[arr])
+        .join(' ')
+    }
+    return target[prop]
     }
 })
-
+console.log(personProxy.age_citizen_name_age)
 // [ 'Kolya', 'Anya', 'Misha', 'Sasha', 'Eugene', 'Dasha' ]
 personProxy.friends = "Sasha_Eugene_Dasha";
 
@@ -67,10 +73,24 @@ console.log(personProxy.friends);
 
 /**
  *  ЗАДАНИЕ №2
- * 1. Выяснить какие базовые методы вызываются у объекта когда к нему применяют цикл for (let prop in personProxy)
+ * 1. Выяснить какие базовые методы вызываются у объекта когда к нему применяют цикл for (let prop of personProxy)
  * 2. Проксировать эти методы таким образом, чтобы при прохождении идентификаторов свойств объекта
- *  циклом for...in в prop попадали только методы, которые начинаются с get
- *  3. в цикле for...in пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
+ *  циклом for...of в prop попадали только методы, которые начинаются с get
+ *  3. в цикле for...of пройтсь по идентифкаторам свойств объекта и вызывать полученные в prop методы
  *  4. убедиться что были вызванны только методы get...
  */
 
+ const objhid = (target,prefix = 'get')=>{
+    return new Proxy(target,{
+        has:(obj,prop) => prop in obj && prop.startsWith(prefix),
+        ownKeys: obj =>Reflect.ownKeys(obj).filter (p=> p.startsWith(prefix)),
+        get:(obj,prop,receiver) => (prop in receiver ? obj[prop] : Object.defineProperties(obj,'prop',{
+            enumerable:false,
+        }))
+    })
+}
+
+const obj1 = objhid(person)
+for(let keys in obj1){
+    console.log(keys);
+}
